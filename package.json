@@ -1,0 +1,69 @@
+{
+	"name": "hackjs",
+	"version": "0.1.0",
+	"description": "Functional programs for hacking in node",
+	"main": "dist/index.js",
+	"module": "dist/index.module.js",
+	"source": "index.mjs",
+	"keywords": [
+    "hack",
+    "functional",
+    "fp",
+		"utility",
+    "node",
+    "sanctuary",
+		"ctf"
+	],
+	"author": "Chris Zhou <chrisrzhou@pm.me>",
+	"license": "MIT",
+	"repository": "https://github.com/chrisrzhou/hackjs.git",
+	"bugs": "https://github.com/chrisrzhou/hackjs/issues",
+	"homepage": "https://hackjs.netlify.com/",
+	"scripts": {
+		"lint": "xo --fix",
+		"test": "node test/index.mjs"
+  },
+  "files": [
+    "lib",
+    "index.mjs"
+  ],
+	"dependencies": {
+		"sanctuary": "^3.1.0"
+	},
+	"devDependencies": {
+		"husky": "^4.2.5",
+		"tape": "^5.1.1",
+		"xo": "^0.37.1"
+	},
+	"engines": {
+		"node": ">=13"
+	},
+	"husky": {
+		"hooks": {
+			"pre-push": "npm run lint; npm run test"
+		}
+	},
+	"prettier": {
+		"bracketSpacing": true,
+		"jsxBracketSameLine": true,
+		"trailingComma": "all",
+		"useTabs": false
+	},
+	"xo": {
+		"prettier": true,
+		"env": [
+			"browser"
+		],
+		"extensions": [
+			"mjs"
+		],
+		"rules": {
+      "capitalized-comments": "off",
+      "import/no-unassigned-import": "off",
+      "no-prototype-builtins": "off",
+      "no-warning-comments": "off",
+      "padding-line-between-statements": "off",
+      "unicorn/no-array-reduce": "off"
+		}
+	}
+}
