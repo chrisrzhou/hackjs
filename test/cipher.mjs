@@ -1,6 +1,10 @@
 import test from 'tape';
 
-import { caesarCipher, substitutionCipher } from '../index.mjs';
+import {
+  caesarCipher,
+  createMorseCodeMapping,
+  substitutionCipher,
+} from '../index.mjs';
 
 test('caesarCipher', (t) => {
   t.equal(
@@ -29,6 +33,11 @@ test('substitutionCipher', (t) => {
     substitutionCipher({})(['3', '1', '{', '5', '}']),
     ['3', '1', '{', '5', '}'],
     'should return ciphertext if no substitution is provided',
+  );
+  t.deepEqual(
+    substitutionCipher(createMorseCodeMapping())(['....-', '..---']),
+    ['4', '2'],
+    'should substitute with morsecode mapping',
   );
   t.deepEqual(
     substitutionCipher({

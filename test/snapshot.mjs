@@ -1,10 +1,33 @@
-import { map, pipe, range } from './fp.mjs';
-import { asciiToInt, intToAscii } from './string.mjs';
+export const ALPHABET_LIST = [
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+  'k',
+  'l',
+  'm',
+  'n',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z',
+];
 
-export const createAlphabetList = () =>
-  pipe([range(0), map((n) => intToAscii(n + asciiToInt('a')))])(26);
-
-export const createMorseCodeMapping = () => ({
+export const MORSE_CODE_MAPPING = {
   '-----': '0',
   '.----': '1',
   '..---': '2',
@@ -50,4 +73,4 @@ export const createMorseCodeMapping = () => ({
   '.--.-.': '@',
   '-.--.': '(',
   '-.--.-': ')',
-});
+};

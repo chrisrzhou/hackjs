@@ -40,20 +40,20 @@ pipe([
 // ['L1W1 L1W2 L1W3', 'L2W1 L2W2 L2W3']
 ```
 
-## Test
-
-Run `tape` tests with `npm test`.
-
 ## CTFs
 
-CTFs are solved using the programs in `hackjs`.
+CTFs are solved using the `h` programs.
 
-Solved CTFs are organized in the `ctf` folder as can be executed individually with `node`.
+Solved CTFs are organized in the `ctf` folder and can be executed via `node`.
 
 ```bash
 cd ctf/my-ctf
-node solve.mjs
+node index.mjs
 ```
+
+## Test
+
+Run tests with `npm test`.
 
 ## Related
 - [CTF](https://en.wikipedia.org/wiki/Wargame_(hacking))

@@ -1,35 +1,14 @@
 import test from 'tape';
 
-import { createAlphabetList } from '../index.mjs';
+import { createAlphabetList, createMorseCodeMapping } from '../index.mjs';
+import { ALPHABET_LIST, MORSE_CODE_MAPPING } from './snapshot.mjs';
 
 test('createAlphabetList', (t) => {
-  t.deepEqual(createAlphabetList(), [
-    'a',
-    'b',
-    'c',
-    'd',
-    'e',
-    'f',
-    'g',
-    'h',
-    'i',
-    'j',
-    'k',
-    'l',
-    'm',
-    'n',
-    'o',
-    'p',
-    'q',
-    'r',
-    's',
-    't',
-    'u',
-    'v',
-    'w',
-    'x',
-    'y',
-    'z',
-  ]);
+  t.deepEqual(createAlphabetList(), ALPHABET_LIST);
+  t.end();
+});
+
+test('createMorseCodeMapping', (t) => {
+  t.deepEqual(createMorseCodeMapping(), MORSE_CODE_MAPPING);
   t.end();
 });
