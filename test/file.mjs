@@ -1,6 +1,6 @@
 import test from 'tape';
 
-test('file', (t) => {
+test('pipeFile', (t) => {
   // todo: to be implemented
   t.end();
 });

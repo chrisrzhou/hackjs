@@ -42,16 +42,9 @@ test('Lets Warm Up', (t) => {
 
 test('The Numbers', (t) => {
   const c = '16 9 3 15 3 20 6 { 20 8 5 14 21 13 2 5 18 19 13 1 19 15 14 }';
-  const aCharCode = h.asciiToInt('a');
-  const substitution = h
-    .range(0)(26)
-    .reduce((acc, n) => {
-      acc[h.toString(10)(n + 1)] = h.intToAscii(n + aCharCode);
-      return acc;
-    }, {});
   const p = h.pipe([
     h.splitOn(' '),
-    h.substitutionCipher(substitution),
+    h.substitutionCipher(),
     h.joinWith(''),
     h.toUpper,
   ])(c);
@@ -59,7 +52,8 @@ test('The Numbers', (t) => {
   t.end();
 });
 
-test.skip('Warmed Up', (t) => {
+test('Warmed Up', (t) => {
+  t.equal(flag(h.recode(16)(10)('0x3D')), 'picoCTF{61}');
   t.end();
 });
 
@@ -67,23 +61,38 @@ test.skip('handy-shellcode', (t) => {
   t.end();
 });
 
-test.skip('practice-run-1', (t) => {
+test('practice-run-1', (t) => {
+  // log into shell and folder and execute with './run_this'
+  t.equal('picoCTF{g3t_r3adY_2_r3v3r53}', 'picoCTF{g3t_r3adY_2_r3v3r53}');
   t.end();
 });
 
-test.skip('unzip', (t) => {
+test('unzip', (t) => {
+  // unzip with 'tar -xvzf flag.zip'
+  // visually note code in flag.png
+  t.equal(flag('unz1pp1ng_1s_3a5y'), 'picoCTF{unz1pp1ng_1s_3a5y}');
   t.end();
 });
 
-test.skip('vault-door-training', (t) => {
+test('vault-door-training', (t) => {
+  // reverse engineer VaultDoorTraining.java
+  t.equal(
+    flag('w4rm1ng_Up_w1tH_jAv4_e57d01a632a'),
+    'picoCTF{w4rm1ng_Up_w1tH_jAv4_e57d01a632a}',
+  );
   t.end();
 });
 
-test.skip('13', (t) => {
+test('13', (t) => {
+  t.equal(
+    h.caesarCipher(13)('cvpbPGS{abg_gbb_onq_bs_n_ceboyrz}'),
+    'picoCTF{not_too_bad_of_a_problem}',
+  );
   t.end();
 });
 
-test.skip('Bases', (t) => {
+test('Bases', (t) => {
+  t.equal(flag(h.atob('bDNhcm5fdGgzX3IwcDM1')), 'picoCTF{l3arn_th3_r0p35}');
   t.end();
 });
 

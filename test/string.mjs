@@ -1,6 +1,13 @@
 import test from 'tape';
 
-import { asciiToInt, intToAscii, recode, toString } from '../index.mjs';
+import {
+  asciiToInt,
+  atob,
+  btoa,
+  intToAscii,
+  recode,
+  toString,
+} from '../index.mjs';
 
 test('asciiToInt', (t) => {
   t.test('should convert from ascii', (t) => {
@@ -9,6 +16,22 @@ test('asciiToInt', (t) => {
     t.equal(asciiToInt('½'), 189);
     t.end();
   });
+  t.end();
+});
+
+test('atob', (t) => {
+  const a = 'bDNhcm5fdGgzX3IwcDM1';
+  const b = 'l3arn_th3_r0p35';
+  t.equal(atob(a), b);
+  t.equal(btoa(atob(a)), a);
+  t.end();
+});
+
+test('btoa', (t) => {
+  const a = 'bDNhcm5fdGgzX3IwcDM1';
+  const b = 'l3arn_th3_r0p35';
+  t.equal(btoa(b), a);
+  t.equal(atob(btoa(b)), b);
   t.end();
 });
 

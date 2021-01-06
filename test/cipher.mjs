@@ -1,6 +1,28 @@
 import test from 'tape';
 
-import { substitutionCipher } from '../index.mjs';
+import { caesarCipher, substitutionCipher } from '../index.mjs';
+
+test('caesarCipher', (t) => {
+  t.equal(
+    caesarCipher(0)('abcxyz'),
+    'abcxyz',
+    'should return ciphertext if shift is 0',
+  );
+  t.equal(
+    caesarCipher(26)('abcxyz'),
+    'abcxyz',
+    'should return ciphertext if shift is 26',
+  );
+
+  const rot13 = caesarCipher(13);
+  t.equal(rot13('abcxyz'), 'nopklm', 'should return shifted plaintext (rot13)');
+  t.equal(
+    rot13('abc _%_ XYZ'),
+    'nop _%_ KLM',
+    'should be case-sensitive and only apply on alphabets',
+  );
+  t.end();
+});
 
 test('substitutionCipher', (t) => {
   t.deepEqual(
