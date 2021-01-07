@@ -5,7 +5,13 @@ import {
   atob,
   btoa,
   intToAscii,
+  isLower,
+  isUpper,
   recode,
+  shiftAlphabet,
+  stringToInt,
+  toLower,
+  toUpper,
   toString,
 } from '../index.mjs';
 
@@ -45,6 +51,20 @@ test('intToAscii', (t) => {
   t.end();
 });
 
+test('isLower', (t) => {
+  t.ok(isLower('-'));
+  t.ok(isLower('a'));
+  t.notOk(isLower('A'));
+  t.end();
+});
+
+test('isUpper', (t) => {
+  t.ok(isUpper('-'));
+  t.ok(isUpper('A'));
+  t.notOk(isUpper('a'));
+  t.end();
+});
+
 test('recode', (t) => {
   t.equal(recode(10)(10)(4242), '4242', 'should stringify');
   t.equal(
@@ -67,6 +87,42 @@ test('recode', (t) => {
     '1000010010010',
     'should convert from decimal (10) to binary (2)',
   );
+  t.end();
+});
+
+test('shiftAlphabet', (t) => {
+  t.equal(shiftAlphabet(2)('-'), '-', 'should not shift non-alphabets');
+  t.equal(shiftAlphabet(0)('y'), 'y', 'should not shift');
+  t.equal(shiftAlphabet(26)('y'), 'y', 'should not shift');
+  t.equal(shiftAlphabet(2)('y'), 'a', 'should shift by +2');
+  t.equal(shiftAlphabet(-2)('y'), 'w', 'should shift by -2');
+  t.equal(shiftAlphabet(2)('Y'), 'A', 'should be case-sensistive');
+  t.end();
+});
+
+test('stringToInt', (t) => {
+  t.equal(stringToInt(10)('42'), 42, 'should convert int string to int');
+  t.equal(
+    stringToInt(16)('42'),
+    66,
+    'should convert int string for specified radix',
+  );
+  t.equal(stringToInt(10)('42.6'), 42, 'should convert float string to int');
+  t.equal(
+    stringToInt(10)('not a number'),
+    Number.NaN,
+    'should not convert non-numbers',
+  );
+  t.end();
+});
+
+test('toLower', (t) => {
+  t.equal(toLower('abcDEF--'), 'abcdef--');
+  t.end();
+});
+
+test('toUpper', (t) => {
+  t.equal(toUpper('abcDEF--'), 'ABCDEF--');
   t.end();
 });
 

@@ -1,9 +1,10 @@
 import test from 'tape';
 
 import {
+  MORSE_CODE_MAPPING,
   caesarCipher,
-  createMorseCodeMapping,
   substitutionCipher,
+  vigenereCipher,
 } from '../index.mjs';
 
 test('caesarCipher', (t) => {
@@ -35,7 +36,7 @@ test('substitutionCipher', (t) => {
     'should return ciphertext if no substitution is provided',
   );
   t.deepEqual(
-    substitutionCipher(createMorseCodeMapping())(['....-', '..---']),
+    substitutionCipher(MORSE_CODE_MAPPING)(['....-', '..---']),
     ['4', '2'],
     'should substitute with morsecode mapping',
   );
@@ -47,6 +48,20 @@ test('substitutionCipher', (t) => {
     })(['3', '1', '{', '5', '}']),
     ['c', 'a', '{', 'xyz', '}'],
     'should substitute matching characters is provided',
+  );
+  t.end();
+});
+
+test('vigenereCipher', (t) => {
+  t.equal(
+    vigenereCipher('SOLVECRYPTO')('UFJKXQZQUNB'),
+    'CRYPTOISFUN',
+    'should solve ciphertext with pad and key',
+  );
+  t.equal(
+    vigenereCipher('SOLVEcrypto')('UFJKXQzqUNB'),
+    'CRYPTOisFUN',
+    'should be case-insensitive but preserve case in ciphertext',
   );
   t.end();
 });

