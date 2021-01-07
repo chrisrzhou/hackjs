@@ -4,21 +4,25 @@ import * as h from '../../index.mjs';
 
 const flag = (x) => `picoCTF{${x}}`;
 
-solve('2Warm', (t) => {
-  t.equal(flag(h.recode(10)(2)(42)), 'picoCTF{101010}');
-  t.end();
-});
-
-solve('Glory of the Garden', (t) => {
+const findFlagInFile = (path) => {
   const flagRegexp = /picoCTF{.*}/;
-  const f = h.pipeFile([
+  return h.pipeFile([
     h.toString('utf8'),
     h.lines,
     h.filter(h.test(flagRegexp)),
     h.head,
     h.match(flagRegexp),
     h.prop('match'),
-  ])('./glory-of-the-garden.jpg');
+  ])(path);
+};
+
+solve('2Warm', (t) => {
+  t.equal(flag(h.recode(10)(2)(42)), 'picoCTF{101010}');
+  t.end();
+});
+
+solve('Glory of the Garden', (t) => {
+  const f = findFlagInFile('./glory-of-the-garden.jpg');
   t.equal(f, 'picoCTF{more_than_m33ts_the_3y36BCA684D}');
   t.end();
 });
@@ -104,20 +108,16 @@ solve('Easy1', (t) => {
 });
 
 solve('First Grep', (t) => {
-  const flagRegexp = /picoCTF{.*}/;
-  const f = h.pipeFile([
-    h.toString('utf8'),
-    h.lines,
-    h.filter(h.test(flagRegexp)),
-    h.head,
-    h.match(flagRegexp),
-    h.prop('match'),
-  ])('./first-grep');
+  const f = findFlagInFile('./first-grep');
   t.equal(f, 'picoCTF{grep_is_good_to_find_things_4b2451ea}');
   t.end();
 });
 
-solve.skip('OverFlow 0', (t) => {
+solve('OverFlow 0', (t) => {
+  // visit shellserver and inspect code in vuln.c
+  // provide an arg that is larger than 128bytes
+  const f = 'picoCTF{3asY_P3a5y2f814ddc}';
+  t.equal(f, 'picoCTF{3asY_P3a5y2f814ddc}');
   t.end();
 });
 
@@ -148,19 +148,33 @@ solve('dont-use-client-side', (t) => {
   t.end();
 });
 
-solve.skip('logon', (t) => {
+solve('logon', (t) => {
+  // login to https://2019shell1.picoctf.com/problem/49907/
+  // notice that the login POST request sets the cookie with "Admin=false"
+  // Configure cURL for GET https://2019shell1.picoctf.com/problem/49907/flag to use "Admin=true" for the cookie value.
+  // grab the flag
+  const f = 'picoCTF{th3_c0nsp1r4cy_l1v3s_9e21365b}';
+  t.equal(f, 'picoCTF{th3_c0nsp1r4cy_l1v3s_9e21365b}');
   t.end();
 });
 
-solve.skip('strings it', (t) => {
+solve('strings it', (t) => {
+  const f = findFlagInFile('./strings-it');
+  t.equal(f, 'picoCTF{5tRIng5_1T_c7fff9e5}');
   t.end();
 });
 
-solve.skip('vault-door-1', (t) => {
+solve('vault-door-1', (t) => {
+  // reverse engineer ./VaultDoor1.java
+  const f = 'd35cr4mbl3_tH3_cH4r4cT3r5_51e7fd';
+  t.equal(flag(f), 'picoCTF{d35cr4mbl3_tH3_cH4r4cT3r5_51e7fd}');
   t.end();
 });
 
-solve.skip("what's a net cat?", (t) => {
+solve("what's a net cat?", (t) => {
+  // connect with "nc 2019shell1.picoctf.com 4158"
+  const f = 'picoCTF{nEtCat_Mast3ry_700da9c7}';
+  t.equal(f, 'picoCTF{nEtCat_Mast3ry_700da9c7}');
   t.end();
 });
 
@@ -173,7 +187,13 @@ solve('where are the robots', (t) => {
   t.end();
 });
 
-solve.skip('So Meta', (t) => {
+solve.skip('OverFlow 1', (t) => {
+  t.end();
+});
+
+solve('So Meta', (t) => {
+  const f = findFlagInFile('./so-meta.png');
+  t.equal(f, 'picoCTF{s0_m3ta_505fdd8b}');
   t.end();
 });
 
@@ -181,7 +201,16 @@ solve.skip('What Lies Within', (t) => {
   t.end();
 });
 
-solve.skip('extensions', (t) => {
+solve('extensions', (t) => {
+  // try to grep for the flag in the content
+  const mime = h.pipeFile([h.toString('utf8'), h.lines, h.head])(
+    './extensions.txt',
+  );
+  console.log(mime);
+  // confirm the mime type and change the file extension to .png
+  // grab the flag visually
+  const f = 'picoCTF{now_you_know_about_extensions}';
+  t.equal(f, 'picoCTF{now_you_know_about_extensions}');
   t.end();
 });
 
@@ -218,7 +247,10 @@ solve.skip('Client-side-again', (t) => {
   t.end();
 });
 
-solve.skip('First Grep: Part II', (t) => {
+solve('First Grep: Part II', (t) => {
+  // grep on CLI with "grep -nr picoCTF{"
+  const f = 'picoCTF{grep_r_to_find_this_5241c61f}';
+  t.equal(f, 'picoCTF{grep_r_to_find_this_5241c61f}');
   t.end();
 });
 
@@ -269,7 +301,50 @@ solve('Flags', (t) => {
   t.end();
 });
 
-solve.skip('Mr-Worldwide', (t) => {
+solve('Mr-Worldwide', (t) => {
+  // track coordinates separated by '_'
+  const coords1 = [
+    [35.028309, 135.753082],
+    [46.469391, 30.740883],
+    [39.758949, -84.191605],
+    [41.015137, 28.97953],
+    [24.466667, 54.366669],
+    [3.140853, 101.693207],
+  ];
+  const coords2 = [
+    [9.005401, 38.763611],
+    [-3.989038, -79.20356],
+    [52.377956, 4.89707],
+    [41.085651, -73.858467],
+    [57.790001, -152.407227],
+    [31.205753, 29.924526],
+  ];
+  console.log(coords1, coords2);
+  // track cities
+  const locations1 = [
+    'Kyoto',
+    'Odesa',
+    'Dayton',
+    'Istanbul',
+    'Abu Dhabi',
+    'Kuala Lumpur',
+  ];
+  const locations2 = [
+    'Addis Ababa',
+    'Loja',
+    'Amsterdam',
+    'Sleepy Hollow',
+    'Kodiak',
+    'Alexandria Governorate',
+  ];
+  // the flag seems to be the first letters of cities, which spells out KODIAK-ALASKA (which is also conveniently hidden in locations2)
+  const getFirstChars = h.pipe([
+    h.map(h.splitOn('')),
+    h.map(h.head),
+    h.joinWith(''),
+  ]);
+  const f = `${getFirstChars(locations1)}_${getFirstChars(locations2)}`;
+  t.equal(flag(f), 'picoCTF{KODIAK_ALASKA}');
   t.end();
 });
 
@@ -293,11 +368,19 @@ solve.skip('la cifra de', (t) => {
   t.end();
 });
 
-solve.skip('picobrowser', (t) => {
+solve('picobrowser', (t) => {
+  // hit https://2019shell1.picoctf.com/problem/21851/flag
+  // set the "User-Agent=picobrowser" and resend the GET request
+  // grab the flag
+  const f = 'picoCTF{p1c0_s3cr3t_ag3nt_3e1c0ea2}';
+  t.equal(f, 'picoCTF{p1c0_s3cr3t_ag3nt_3e1c0ea2}');
   t.end();
 });
 
-solve.skip('plumbing', (t) => {
+solve('plumbing', (t) => {
+  // pipe the stdout with "nc 2019shell1.picoctf.com 63345 | grep picoCTF{"
+  const f = 'picoCTF{digital_plumb3r_4e7a5813}';
+  t.equal(f, 'picoCTF{digital_plumb3r_4e7a5813}');
   t.end();
 });
 
