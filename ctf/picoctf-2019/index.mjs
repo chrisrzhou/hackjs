@@ -215,10 +215,7 @@ solve('What Lies Within', (s) => {
 
 solve('extensions', (s) => {
   // try to grep for the flag in the content
-  const mime = h.pipeFile([h.toString('utf8'), h.lines, h.head])(
-    './extensions.txt',
-  );
-  console.log(mime);
+  h.pipeFile([h.toString('utf8'), h.lines, h.head])('./extensions.txt');
   // confirm the mime type and change the file extension to .png
   // grab the flag visually
   const f = 'picoCTF{now_you_know_about_extensions}';
@@ -248,11 +245,9 @@ solve('Based', (s) => {
   const i2 = '154 141 155 160';
   const i3 = '63 6f 6d 70 75 74 65 72';
 
-  const a1 = serialize(2)(i1);
-  const a2 = serialize(8)(i2);
-  const a3 = serialize(16)(i3);
-
-  console.log(a1, a2, a3);
+  serialize(2)(i1);
+  serialize(8)(i2);
+  serialize(16)(i3);
 
   // grab the flag
   const f = 'picoCTF{learning_about_converting_values_502ff297}';
@@ -300,25 +295,7 @@ solve('Flags', (s) => {
 });
 
 solve('Mr-Worldwide', (s) => {
-  // track coordinates separated by '_'
-  const coords1 = [
-    [35.028309, 135.753082],
-    [46.469391, 30.740883],
-    [39.758949, -84.191605],
-    [41.015137, 28.97953],
-    [24.466667, 54.366669],
-    [3.140853, 101.693207],
-  ];
-  const coords2 = [
-    [9.005401, 38.763611],
-    [-3.989038, -79.20356],
-    [52.377956, 4.89707],
-    [41.085651, -73.858467],
-    [57.790001, -152.407227],
-    [31.205753, 29.924526],
-  ];
-  console.log(coords1, coords2);
-  // track cities
+  // track cities of coordinates
   const locations1 = [
     'Kyoto',
     'Odesa',
@@ -425,7 +402,6 @@ solve('whats-the-difference', (s) => {
       h.pipe([h.trim, h.splitOn(' '), h.last, h.stringToInt(10), h.octToAscii]),
     ),
     h.joinWith(''),
-    h.tap('after split'),
   ])('./whats-the-difference');
   s.equal(
     f,
@@ -453,7 +429,6 @@ solve('WhitePages', (s) => {
     h.map(h.pipe([h.recode(2)(8), h.octToAscii])),
     h.joinWith(''),
     grabFlag,
-    h.tap('final'),
   ])('./whitepages.txt');
   s.equal(
     f,

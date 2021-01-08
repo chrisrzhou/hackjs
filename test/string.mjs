@@ -41,7 +41,7 @@ test('btoa', (t) => {
   t.end();
 });
 
-test.only('chunkString', (t) => {
+test('chunkString', (t) => {
   t.throws(() => chunkString(0)('abcdefg'));
   t.deepEqual(
     chunkString(1)('abcdefg'),
