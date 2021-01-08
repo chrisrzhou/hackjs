@@ -1,25 +1,25 @@
 import test from 'tape';
 
 import {
-  asciiToInt,
+  asciiToDec,
   atob,
   btoa,
-  intToAscii,
+  chunkString,
+  decToAscii,
   isLower,
   isUpper,
+  octToAscii,
   recode,
   shiftAlphabet,
   stringToInt,
-  toLower,
-  toUpper,
   toString,
 } from '../index.mjs';
 
-test('asciiToInt', (t) => {
+test('asciiToDec', (t) => {
   t.test('should convert from ascii', (t) => {
-    t.equal(asciiToInt('p'), 112);
-    t.equal(asciiToInt('~'), 126);
-    t.equal(asciiToInt('½'), 189);
+    t.equal(asciiToDec('p'), 112);
+    t.equal(asciiToDec('~'), 126);
+    t.equal(asciiToDec('½'), 189);
     t.end();
   });
   t.end();
@@ -41,11 +41,36 @@ test('btoa', (t) => {
   t.end();
 });
 
-test('intToAscii', (t) => {
+test.only('chunkString', (t) => {
+  t.throws(() => chunkString(0)('abcdefg'));
+  t.deepEqual(
+    chunkString(1)('abcdefg'),
+    ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+    'should chunk with size = 1',
+  );
+  t.deepEqual(
+    chunkString(2)('abcdefg'),
+    ['ab', 'cd', 'ef', 'g'],
+    'should chunk with size = 2',
+  );
+  t.deepEqual(
+    chunkString(3)('abcdefg'),
+    ['abc', 'def', 'g'],
+    'should chunk with size = 3',
+  );
+  t.deepEqual(
+    chunkString(8)('0010100111000101'),
+    ['00101001', '11000101'],
+    'should chunk "bits"',
+  );
+  t.end();
+});
+
+test('decToAscii', (t) => {
   t.test('should convert to ascii', (t) => {
-    t.equal(intToAscii(112), 'p');
-    t.equal(intToAscii(126), '~');
-    t.equal(intToAscii(189), '½');
+    t.equal(decToAscii(112), 'p');
+    t.equal(decToAscii(126), '~');
+    t.equal(decToAscii(189), '½');
     t.end();
   });
   t.end();
@@ -62,6 +87,11 @@ test('isUpper', (t) => {
   t.ok(isUpper('-'));
   t.ok(isUpper('A'));
   t.notOk(isUpper('a'));
+  t.end();
+});
+
+test('octToAscii', (t) => {
+  t.equal(octToAscii(160), 'p');
   t.end();
 });
 
@@ -113,16 +143,6 @@ test('stringToInt', (t) => {
     Number.NaN,
     'should not convert non-numbers',
   );
-  t.end();
-});
-
-test('toLower', (t) => {
-  t.equal(toLower('abcDEF--'), 'abcdef--');
-  t.end();
-});
-
-test('toUpper', (t) => {
-  t.equal(toUpper('abcDEF--'), 'ABCDEF--');
   t.end();
 });
 

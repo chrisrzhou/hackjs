@@ -6,12 +6,12 @@
 	"module": "dist/index.module.js",
 	"source": "index.mjs",
 	"keywords": [
-    "hack",
-    "functional",
-    "fp",
+		"hack",
+		"functional",
+		"fp",
 		"utility",
-    "node",
-    "sanctuary",
+		"node",
+		"sanctuary",
 		"ctf"
 	],
 	"author": "Chris Zhou <chrisrzhou@pm.me>",
@@ -22,11 +22,11 @@
 	"scripts": {
 		"lint": "xo --fix",
 		"test": "node test/index.mjs"
-  },
-  "files": [
-    "lib",
-    "index.mjs"
-  ],
+	},
+	"files": [
+		"lib",
+		"index.mjs"
+	],
 	"dependencies": {
 		"sanctuary": "^3.1.0"
 	},
@@ -53,19 +53,21 @@
 		"prettier": true,
 		"env": [
 			"browser"
-    ],
-    "ignores": ["ctf/**/*.js"],
+		],
+		"ignores": [
+			"ctf/**/*.js"
+		],
 		"extensions": [
 			"mjs"
 		],
 		"rules": {
-      "capitalized-comments": "off",
-      "import/no-unassigned-import": "off",
-      "no-prototype-builtins": "off",
-      "no-warning-comments": "off",
-      "padding-line-between-statements": "off",
-      "unicorn/no-array-callback-reference": "off",
-      "unicorn/no-array-reduce": "off"
+			"capitalized-comments": "off",
+			"import/no-unassigned-import": "off",
+			"no-prototype-builtins": "off",
+			"no-warning-comments": "off",
+			"padding-line-between-statements": "off",
+			"unicorn/no-array-callback-reference": "off",
+			"unicorn/no-array-reduce": "off"
 		}
 	}
 }
